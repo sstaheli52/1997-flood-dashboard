@@ -199,22 +199,22 @@ server <- function(input, output) {
       scale_x_continuous(breaks = 1:31) +
       theme_minimal()
     
-    # Add evaporation line and points if the checkbox is clicked
-    if ("Evaporation" %in% input$ts_vars) {
-      p <- p +
-        geom_line(aes(y = mean), color = "#ff9a4f", size = 1.2) +
-        geom_point(aes(y = mean), color = "black", size = 2)
-    }
+    # Add evaporation line and points if the checkbox is clicked, rounded and values clarified
+  if ("Evaporation" %in% input$ts_vars) {
+    p <- p +
+      geom_line(aes(y = mean, text = paste0("Global Mean Evaporation: ", round(mean, 3), " mm/day")), color = "#ff9a4f", size = 1.2) +
+      geom_point(aes(y = mean, text = paste0("Global Mean Evaporation: ", round(mean, 3), " mm/day")), color = "black", size = 2)
+  }
     
-    # Add precipitation line and points of the checkbox is clicked
-    if ("Precipitation" %in% input$ts_vars) {
-      p <- p +
-        geom_line(aes(y = precip), color = "#75a0ea", size = 1.2) +
-        geom_point(aes(y = precip), color = "black", size = 2)
-    }
+    # Add precipitation line and points if the checkbox is clicked, rounded and values clarified
+  if ("Precipitation" %in% input$ts_vars) {
+    p <- p +
+      geom_line(aes(y = precip, text = paste0("CZ Mean Precipitation: ", round(precip, 3), " mm/day")), color = "#75a0ea", size = 1.2) +
+      geom_point(aes(y = precip, text = paste0("CZ Mean Precipitation: ", round(precip, 3), " mm/day")), color = "black", size = 2)
+  }
     
     # Turn it into an interactive plot
-    ggplotly(p)
+    ggplotly(p, tooltip = "text")
   })
   
   output$basin_map <- renderLeaflet({
