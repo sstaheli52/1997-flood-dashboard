@@ -6,16 +6,20 @@ It combines global evaporation tracking with output data from the FLEXPART model
 ## Features
 
 -**Timeseries Plot**
-Visualizes the daily mean evaporation (E2P_EPs) contributing to Czech rainfall alongside MSWEP precipitation in July 1997.
+
+Visualizes the daily **mean evaporation (E2P_EPs)** over all source regions contributing to precipitation in Czechia, alongside the **mean precipitation** over Czechia (from MSWEP) during July 1997.  
+These are **area-averaged values** in millimeters per day (mm/day), which explains why the magnitudes are small as they represent distributed daily contributions, not totals.
 
 -**Time Lapse Map**
+
 Displays the spatial distribution of E2P_EPs across Europe for each day in July 1997.
 
 -**Basin Map & Info Panel**
+
 Interactive leaflet map showing:
 - Total and per-area E2P_EPs by basin (July 7 & 18)
 - Precipitation differences between July 1997 and 1980-2020 climatology
-- Exceedance probability categories and basin fractions
+- Exceedance probability categories and basin fractions (only for July 7th)
 - Rolling Spearman correlations between evaporation and precipitation
 
 ---
