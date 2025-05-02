@@ -340,34 +340,41 @@ server <- function(input, output) {
       )
     }
     
-    # Display all the basin info into well formatted HTML
-    HTML(paste0(
-      "<b>Basin:</b> ", basin$basin_name, "<br>",
-      "<b>E2P_EPs Total:</b> ", round(basin$E2P_EPs_1997, 2), " mm<br>",
-      "<b>Area:</b> ", format(round(basin$area_km2, 0), big.mark = ","), " km²<br>",
-      "<b>E2P_EPs (mm/day):</b> ", signif(basin$E2P_EPs_mm, 4), "<br><br>",
-      
-      "<b>Difference (31-day window):</b><br>",
-      "&nbsp;&nbsp;• Absolute: ", round(basin$abs_diff_31, 2), " mm<br>",
-      "&nbsp;&nbsp;• Relative: ", round(basin$rel_diff_31, 2), " %<br><br>",
-      
-      "<b>Difference (14-day window):</b><br>",
-      "&nbsp;&nbsp;• Absolute: ", round(basin$abs_diff_14, 2), " mm<br>",
-      "&nbsp;&nbsp;• Relative: ", round(basin$rel_diff_14, 2), " %<br><br>",
-      
-      exceedance_table,
-      
-      "<b>Correlation (30-day window):</b><br>",
-      "&nbsp;&nbsp;• Rho: ", round(basin$rho_30, 2), "<br>",
-      "&nbsp;&nbsp;• Significant Dates: ", ifelse(!is.na(basin$sig_dates_30), basin$sig_dates_30, "None"), "<br>",
-      "&nbsp;&nbsp;• Zero Dates: ", ifelse(!is.na(basin$nonsig_dates_30), basin$nonsig_dates_30, "None"), "<br><br>",
-      
-      "<b>Correlation (15-day window):</b><br>",
-      "&nbsp;&nbsp;• Rho: ", round(basin$rho_15, 2), "<br>",
-      "&nbsp;&nbsp;• Significant Dates: ", ifelse(!is.na(basin$sig_dates_15), basin$sig_dates_15, "None"), "<br>",
-      "&nbsp;&nbsp;• Zero Dates: ", ifelse(!is.na(basin$nonsig_dates_15), basin$nonsig_dates_15, "None")
-    ))
-  })
+    # Display all the basin info
+HTML(paste0(
+    "<b>Basin:</b> ", basin$basin_name, "<br>",
+    "<b>E2P_EPs Total:</b> ", round(basin$E2P_EPs_1997, 2), " mm<br>",
+    "<b>Area:</b> ", format(round(basin$area_km2, 0), big.mark = ","), " km²<br>",
+    "<b>E2P_EPs (mm/day):</b> ", signif(basin$E2P_EPs_mm, 4), "<br><br>",
+
+    "<b>Difference (31-day window):</b>",
+    "<ul>",
+    "<li>Absolute: ", round(basin$abs_diff_31, 2), " mm</li>",
+    "<li>Relative: ", round(basin$rel_diff_31, 2), " %</li>",
+    "</ul><br>",
+
+    "<b>Difference (14-day window):</b>",
+    "<ul>",
+    "<li>Absolute: ", round(basin$abs_diff_14, 2), " mm</li>",
+    "<li>Relative: ", round(basin$rel_diff_14, 2), " %</li>",
+    "</ul><br>",
+
+    exceedance_table,
+    "<b>Correlation (30-day window):</b>",
+    "<ul>",
+    "<li>Rho: ", round(basin$rho_30, 2), "</li>",
+    "<li>Significant Dates: ", ifelse(!is.na(basin$sig_dates_30), basin$sig_dates_30, "None"), "</li>",
+    "<li>Zero Dates: ", ifelse(!is.na(basin$nonsig_dates_30), basin$nonsig_dates_30, "None"), "</li>",
+    "</ul><br>",
+
+    "<b>Correlation (15-day window):</b>",
+    "<ul>",
+    "<li>Rho: ", round(basin$rho_15, 2), "</li>",
+    "<li>Significant Dates: ", ifelse(!is.na(basin$sig_dates_15), basin$sig_dates_15, "None"), "</li>",
+    "<li>Zero Dates: ", ifelse(!is.na(basin$nonsig_dates_15), basin$nonsig_dates_15, "None"), "</li>",
+    "</ul>"
+  ))
+})
   
   output$main_panels <- renderUI({
     # Start with an empty list and add sections based on user selection
