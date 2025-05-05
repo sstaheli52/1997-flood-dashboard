@@ -187,6 +187,10 @@ server <- function(input, output) {
   output$timeseries <- renderPlotly({
     # Merge evaporation + precip data by day
     df <- merge(et_data, precip_data, by = "day")
+
+    # Create labels for tooltips
+    df$evap_label <- paste0("Global Mean Evaporation: ", round(df$mean, 4), " mm/day")
+    df$precip_label <- paste0("CZ Mean Precipitation: ", round(df$precip, 4), " mm/day")
     
     # Start building the plot with basic labels and styling
     p <- ggplot(df, aes(x = day)) +
@@ -200,18 +204,18 @@ server <- function(input, output) {
       theme_minimal()
     
     # Add evaporation line and points if the checkbox is clicked, rounded and values clarified
-  if ("Evaporation" %in% input$ts_vars) {
-    p <- p +
-      geom_line(aes(y = mean, text = paste0("Global Mean Evaporation: ", round(mean, 3), " mm/day")), color = "#ff9a4f", size = 1.2) +
-      geom_point(aes(y = mean, text = paste0("Global Mean Evaporation: ", round(mean, 3), " mm/day")), color = "black", size = 2)
-  }
+    if ("Evaporation" %in% input$ts_vars) {
+      p <- p +
+        geom_line(data = df, aes(x = day, y = mean, text = evap_label, group = 1), color = "#ff9a4f", size = 1.2) +
+        geom_point(data = df, aes(x = day, y = mean, text = evap_label), color = "black", size = 2)
+    }
     
     # Add precipitation line and points if the checkbox is clicked, rounded and values clarified
-  if ("Precipitation" %in% input$ts_vars) {
-    p <- p +
-      geom_line(aes(y = precip, text = paste0("CZ Mean Precipitation: ", round(precip, 3), " mm/day")), color = "#75a0ea", size = 1.2) +
-      geom_point(aes(y = precip, text = paste0("CZ Mean Precipitation: ", round(precip, 3), " mm/day")), color = "black", size = 2)
-  }
+    if ("Precipitation" %in% input$ts_vars) {
+      p <- p +
+        geom_line(data = df, aes(x = day, y = precip, text = precip_label, group = 1), color = "#75a0ea", size = 1.2) +
+        geom_point(data = df, aes(x = day, y = precip, text = precip_label), color = "black", size = 2)
+    }
     
     # Turn it into an interactive plot
     ggplotly(p, tooltip = "text")
