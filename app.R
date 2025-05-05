@@ -342,7 +342,6 @@ server <- function(input, output) {
       } else {
       exceedance_table <- "<i>Exceedance data is only available for July 7.</i><br><br>"
       }
-    }
     
     # Display all the basin info into well formatted HTML
     HTML(paste0(
