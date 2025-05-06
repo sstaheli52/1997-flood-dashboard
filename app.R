@@ -315,7 +315,7 @@ server <- function(input, output) {
         filter(basin_name == basin$basin_name, window == "31-day") %>%
         select(category, fraction)
       
-      # function ot turn each exceedance table into HTML
+      # function to turn each exceedance table into HTML
       format_table <- function(ex_df, label) {
         if (nrow(ex_df) == 0) return("")
         
@@ -338,7 +338,10 @@ server <- function(input, output) {
         format_table(ex_14, "14-day"),
         format_table(ex_31, "31-day")
       )
-    }
+      
+      } else {
+      exceedance_table <- "<i>Exceedance data is only available for July 7.</i><br><br>"
+      }
     
     # Display all the basin info
 HTML(paste0(
